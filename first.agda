@@ -63,3 +63,26 @@ _$*_ : {A A' B B' : Set} -> (A -> A') -> (B -> B') -> A * B -> A' * B'
 _$+_ : {A A' B B' : Set} -> (A -> A') -> (B -> B') -> A + B -> A' + B'
 (f $+ g) (inl a) = inl (f a)
 (f $+ g) (inr b) = inr (g b)
+
+-- Combinators
+-- K-combinator
+-- combinatorK : {A E : Set} -> A -> E -> A
+-- combinatorK = ?
+-- C^c C^r -> refine (introduces a lambda here)
+combinatorK : {A E : Set} -> A -> E -> A
+combinatorK = λ x x₁ → x
+
+-- S Combinator
+-- combinatorS : {S T E: Set} -> (E -> S -> T) -> (E -> S) -> E -> T
+-- combinatorS = ?
+combinatorS : {S T E : Set} -> (E -> S -> T) -> (E -> S) -> E -> T
+combinatorS = λ x x₁ x₂ → x x₂ (x₁ x₂)
+
+-- Identity using combinator(s)
+-- id : {X : Set} -> X -> X
+-- id = id = combinatorS combinatorK (combinatorK {?} {?})
+-- Note, `Zero` is not used but we use to make the type system happy.
+-- `One`, or any other type would be the same.
+-- Note 2 : application associates to the left.
+id : {X : Set} -> X -> X
+id = combinatorS combinatorK (combinatorK {_} {Zero})
